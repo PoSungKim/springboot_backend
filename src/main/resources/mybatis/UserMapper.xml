@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.portfolio.springboot_backend.dao.UserDao">
+
+    <select id="usersList" resultType="com.portfolio.springboot_backend.model.UserVO">
+        SELECT * FROM users
+        ORDER BY id
+    </select>
+
+    <select id="findUser" resultType ="com.portfolio.springboot_backend.model.UserVO" parameterType="com.portfolio.springboot_backend.model.UserVO">
+        SELECT * FROM users
+        WHERE username = #{username} OR email = #{email}
+    </select>
+
+    <select id="logInUser" resultType="com.portfolio.springboot_backend.model.UserVO" parameterType="com.portfolio.springboot_backend.model.UserVO">
+        SELECT * FROM users
+        WHERE email = #{email} AND password = #{password}
+    </select>
+
+    <insert id="registerUser" parameterType="com.portfolio.springboot_backend.model.UserVO">
+        INSERT INTO users(username, password, email)
+        VALUES (#{username}, #{password}, #{email})
+    </insert>
+
+</mapper>
