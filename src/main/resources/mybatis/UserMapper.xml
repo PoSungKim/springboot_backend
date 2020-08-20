@@ -14,7 +14,7 @@
 
     <select id="logInUser" resultType="com.portfolio.springboot_backend.model.UserVO" parameterType="com.portfolio.springboot_backend.model.UserVO">
         SELECT * FROM users
-        WHERE email = #{email} AND password = #{password}
+        WHERE email = #{email}
     </select>
 
     <insert id="registerUser" parameterType="com.portfolio.springboot_backend.model.UserVO">
