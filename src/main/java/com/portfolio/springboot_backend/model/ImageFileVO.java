@@ -1,11 +1,10 @@
 package com.portfolio.springboot_backend.model;
-
 import lombok.Data;
 
 
 @Data
-public class UploadVO {
-    private Long id;
+public class ImageFileVO {
+    private Long key;
     private String fileName;
     private String fileType;
     private byte[] imageByteData;
