@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.portfolio.springboot_backend.dao.ProductDao">
+
+    <select id="productList" resultType="com.portfolio.springboot_backend.model.product.ProductVO">
+        SELECT * FROM products
+        ORDER BY id;
+    </select>
+
+    <insert id="saveProduct" parameterType="com.portfolio.springboot_backend.model.product.ProductVO">
+        INSERT INTO products(writer, title, content, price, continent)
+        VALUES (#{writer}, #{title}, #{content}, #{price}, #{continent})
+    </insert>
+
+    <insert id="saveUserProduct" parameterType="com.portfolio.springboot_backend.model.product.UserProductVO">
+        INSERT INTO user_product(user_id, product_id)
+        VALUES (#{user_id}, #{product_id})
+    </insert>
+
+    <insert id="saveProductImages" parameterType="com.portfolio.springboot_backend.model.product.ProductImagesVO">
+        INSERT INTO product_images(product_id, productImage_id, fileName, fileType, imageByteData)
+        VALUES (#{product_id}, #{productImage_id}, #{fileName}, #{fileType}, #{imageByteData})
+    </insert>
+
+    <select id="findProductId" resultType="int" parameterType="com.portfolio.springboot_backend.model.product.ProductVO">
+        SELECT id FROM products
+        WHERE writer = #{writer} AND title = #{title} AND content = #{content} AND price = #{price} AND continent = #{continent}
+    </select>
+
+    <select id="findUserId" resultType="int" parameterType="String">
+        SELECT id FROM users
+        WHERE username = #{writer}
+    </select>
+
+</mapper>
