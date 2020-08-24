@@ -8,5 +8,5 @@ public class UploadVO {
     private Long id;
     private String fileName;
     private String fileType;
-    private byte[] data;
+    private byte[] imageByteData;
 }
