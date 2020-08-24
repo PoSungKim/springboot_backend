@@ -36,6 +36,7 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/users").permitAll()
+                .antMatchers("/upload").permitAll()
                 .and()
                     .cors();
     }
