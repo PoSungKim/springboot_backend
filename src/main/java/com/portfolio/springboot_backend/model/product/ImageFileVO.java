@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ImageFileVO {
-    private int key;
+    private int productImage_id;
     private String fileName;
     private String fileType;
     private byte[] imageByteData;

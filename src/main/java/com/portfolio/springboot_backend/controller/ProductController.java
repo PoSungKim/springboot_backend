@@ -17,22 +17,27 @@ import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000", "https://posungkim.github.io"}, maxAge = 3600)
 @RestController
-@RequestMapping("upload")
+@RequestMapping("product")
 public class ProductController {
 
     @Autowired
     ProductDao productDao;
     Date date;
 
-    @GetMapping("/products")
+    @GetMapping("/all")
     public List<ProductVO> productsList() {
         System.out.println(date + " 현재 저장된 products 리스트 조회하기");
         System.out.println(productDao.productList());
-        return productDao.productList();
+        List<ProductVO> productList = productDao.productList();
+        for(int i = 0; i < productList.size(); i++) {
+            List<ImageFileVO> imageList = productDao.findImageByProductId(productList.get(i).getId());
+            productList.get(i).setImages(imageList);
+        }
+        return productList;
     }
 
     // FormData 연습용
-    @PostMapping(value = "/preview", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "upload/preview", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public List<ImageFileVO> uploadPreview(@RequestParam(value = "files") MultipartFile[] files) throws IOException {
         // uploadVO 클래스를 담을 수 있는 List 선언 이후에,
         // files에서 하나씩 element 용도 uploadVO를 만들어서,
@@ -41,7 +46,7 @@ public class ProductController {
 
         for(int i = 0; i < files.length; i++) {
             ImageFileVO elementImageFileVO = new ImageFileVO();
-            elementImageFileVO.setKey(i + 1);
+            elementImageFileVO.setProductImage_id(i + 1);
             elementImageFileVO.setFileName(files[i].getOriginalFilename());
             elementImageFileVO.setFileType(files[i].getContentType());
             elementImageFileVO.setImageByteData(files[i].getBytes());
@@ -50,11 +55,11 @@ public class ProductController {
         return imageFileVOList;
     }
 
-    @PostMapping(value = "/product")
+    @PostMapping(value = "upload/product")
     public boolean uploadAll(@RequestBody ProductVO product) throws IOException {
         UserProductVO userProductVO = new UserProductVO();
         ProductImagesVO productImagesVO = new ProductImagesVO();
-
+        boolean success = true;
         try {
             // product 테이블에 정보 넣기
             productDao.saveProduct(product);
@@ -76,13 +81,12 @@ public class ProductController {
                 productImagesVO.setImageByteData(product.getImages().get(i).getImageByteData());
 
                 productDao.saveProductImages(productImagesVO);
+                success = true;
             }
-
         } catch(Exception error) {
             System.out.println(error);
+            success = false;
         }
-
-
-        return true;
+        return success;
     }
 }
