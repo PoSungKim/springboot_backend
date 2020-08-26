@@ -7,7 +7,12 @@
         ORDER BY id;
     </select>
 
-    <select id="findImageByProductId" resultType="com.portfolio.springboot_backend.model.product.ImageFileVO">
+    <select id="findOneProductByProductId" resultType="com.portfolio.springboot_backend.model.product.ProductVO" parameterType="int">
+        SELECT * FROM products
+        WHERE id = #{id}
+    </select>
+
+    <select id="findImageByProductId" resultType="com.portfolio.springboot_backend.model.product.ImageFileVO" parameterType="int">
         SELECT * FROM product_images
         WHERE product_id = #{id}
     </select>

@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000", "https://posungkim.github.io"}, maxAge = 3600)
 @RestController
-@RequestMapping
+@RequestMapping("api/user")
 public class UserController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class UserController {
     Date date = new Date();
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    @GetMapping("users")
+    @GetMapping("/users")
     public List<UserVO> usersList() {
         System.out.println(date + " 현재 회원가입된 users 리스트 조회하기");
         System.out.println(userDao.usersList());
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     // LogIn은 password와 email을 비교해야함
-    @PostMapping("login")
+    @PostMapping("/login")
     public UserVO logInUser(@RequestBody UserVO user) {
         System.out.println(date + " logInUser 확인 요청처리하기: " + user);
         try {
@@ -56,7 +56,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("finduser")
+    @PostMapping("/finduser")
     public UserVO findUser(@RequestBody UserVO user) {
         System.out.println(date + " User 확인 요청처리하기: " + user);
         try {
@@ -70,7 +70,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public boolean registerUser(@RequestBody UserVO user) {
         System.out.println(date + " 회원가입 요청 처리하기: " + user);
         try{

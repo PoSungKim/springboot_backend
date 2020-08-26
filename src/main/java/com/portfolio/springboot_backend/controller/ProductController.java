@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000", "https://posungkim.github.io"}, maxAge = 3600)
 @RestController
-@RequestMapping("product")
+@RequestMapping("api/product")
 public class ProductController {
 
     @Autowired
     ProductDao productDao;
-    Date date;
+    LocalDateTime localDateTime;
 
     @GetMapping("/all")
     public List<ProductVO> productsList() {
-        System.out.println(date + " 현재 저장된 products 리스트 조회하기");
+        System.out.println(localDateTime.now() + " 현재 저장된 products 리스트 조회하기");
         System.out.println(productDao.productList());
         List<ProductVO> productList = productDao.productList();
         for(int i = 0; i < productList.size(); i++) {
@@ -34,6 +34,16 @@ public class ProductController {
             productList.get(i).setImages(imageList);
         }
         return productList;
+    }
+
+    @GetMapping("/{productId}")
+    public ProductVO getOneProductInfo(@PathVariable(value="productId") int id) {
+        System.out.println(localDateTime.now() + " 요청된 하나의 Product 정보 전달하기" + " "+  id);
+        System.out.println(id);
+        ProductVO product = productDao.findOneProductByProductId(id);
+        List<ImageFileVO> imageList = productDao.findImageByProductId(id);
+        product.setImages(imageList);
+        return product;
     }
 
     // FormData 연습용
