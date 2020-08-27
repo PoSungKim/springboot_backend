@@ -1,4 +1,4 @@
-package com.portfolio.springboot_backend.model;
+package com.portfolio.springboot_backend.model.user;
 
 import lombok.Data;
 

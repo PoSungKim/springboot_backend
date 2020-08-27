@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.portfolio.springboot_backend.dao.UserDao;
-import com.portfolio.springboot_backend.model.UserVO;
+import com.portfolio.springboot_backend.model.user.UserVO;
 
 import java.util.Date;
 import java.util.List;

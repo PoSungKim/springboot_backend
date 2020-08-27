@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.portfolio.springboot_backend.dao.CartDao">
+    <select id ="findAllCartByUserId" resultType="com.portfolio.springboot_backend.model.cart.CartVO" parameterType="int">
+        SELECT * FROM
+            (SELECT count(*) as count, user_id, product_id
+             FROM user_cart WHERE user_id = #{user_id} GROUP BY (product_id))
+                AS cnt_user_cart, products
+                WHERE cnt_user_cart.product_id = products.id;
+    </select>
+    <select id="saveUserCart" parameterType="com.portfolio.springboot_backend.model.cart.AddInfoCartVO" >
+        INSERT INTO user_cart(user_id, product_id)
+        VALUES (#{user_id}, #{product_id})
+    </select>
+
+</mapper>
