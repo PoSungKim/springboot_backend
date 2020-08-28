@@ -7,6 +7,7 @@ import com.portfolio.springboot_backend.model.cart.CartVO;
 import com.portfolio.springboot_backend.model.cart.AddInfoCartVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -24,7 +25,6 @@ public class CartController {
     @Autowired
     UserDao userDao;
     LocalDateTime localDateTime;
-    boolean success;
 
     @PostMapping(value="/all")
     public List<CartVO> showMyCart(@RequestBody AddInfoCartVO addInfoCartVO) throws IOException {
@@ -38,8 +38,10 @@ public class CartController {
 
         return cartVOList;
     }
+
     @PostMapping
     public boolean saveCart(@RequestBody AddInfoCartVO addInfoCartVO) throws IOException {
+        boolean success;
         System.out.println(localDateTime.now() + " saveCart() 함수 시작 " + addInfoCartVO);
 
         try {
@@ -48,6 +50,24 @@ public class CartController {
             success = true;
         } catch (Exception error) {
             System.out.println(error);
+            success = false;
+        }
+        return success;
+    }
+
+    @DeleteMapping("/product_id={product_id}&email={email}")
+    public boolean deleteCart(@PathVariable int product_id, @PathVariable String email) throws IOException {
+        boolean success;
+        System.out.println(localDateTime.now() + " deleteSingleCart() 함수 시작 "  + product_id + " " + email);
+        try {
+            AddInfoCartVO addInfoCartVO = new AddInfoCartVO();
+            addInfoCartVO.setUser_id(userDao.findUserIdByEmail(email));
+            addInfoCartVO.setProduct_id(product_id);
+
+            cartDao.deleteUserCart(addInfoCartVO);
+
+            success = true;
+        } catch (Exception error) {
             success = false;
         }
         return success;

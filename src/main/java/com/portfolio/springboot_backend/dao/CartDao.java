@@ -10,5 +10,6 @@ import java.util.List;
 public interface CartDao {
 
     void saveUserCart(AddInfoCartVO addInfoCartVO);
+    void deleteUserCart(AddInfoCartVO addInfoCartVO);
     List<CartVO> findAllCartByUserId(int user_id);
 }
