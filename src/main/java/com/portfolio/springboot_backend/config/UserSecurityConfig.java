@@ -40,6 +40,7 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .cors();
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
