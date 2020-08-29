@@ -25,7 +25,7 @@ public class ChatController {
     @MessageMapping("/send")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(ChatMessage chatMessage) throws Exception {
-        System.out.println("/mychat.send");
+        System.out.println("/mychat.send " + chatMessage);
         return chatMessage;
     }
 
