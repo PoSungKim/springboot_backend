@@ -27,5 +27,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .addEndpoint("/webSocket")
                 .setAllowedOrigins("http://localhost:3000", "https://posungkim.github.io")
                 .withSockJS();
+                //.setWebSocketEnabled(false);
     }
 }

@@ -24,6 +24,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    compile group: 'org.webjars', name: 'sockjs-client', version: '1.1.2'
+    compile group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
 
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
