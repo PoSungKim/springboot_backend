@@ -37,8 +37,21 @@ public class ProductController {
     @GetMapping("/check/{productId}")
     public ProductCartSoldVO ProductCartSoldVO(@PathVariable(value="productId") int id) {
         System.out.println(localDateTime.now() + " ProductCartSoldVO() 함수 호출" + " "+  id);
-        System.out.println(productDao.findCartSoldByProductId(id));
-        return productDao.findCartSoldByProductId(id);
+        ProductCartSoldVO ret = new ProductCartSoldVO();
+        try {
+            ret.setCart_cnt(productDao.findCartByProductId(id));
+        } catch (Exception error) {
+            ret.setCart_cnt(0);
+        }
+
+        try {
+            ret.setPurchase_cnt(productDao.findSoldByProductId(id));
+        } catch (Exception error) {
+            ret.setCart_cnt(0);
+        }
+
+        System.out.println(ret);
+        return ret;
     }
 
     @GetMapping("/{productId}")
