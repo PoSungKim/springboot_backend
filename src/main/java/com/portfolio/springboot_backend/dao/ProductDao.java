@@ -12,8 +12,8 @@ public interface ProductDao {
 
     int findProductId(ProductVO product);
     int findUserId(String writer);
-    int findCartByProductId(int id);
-    int findSoldByProductId(int id);
+    Integer findCartByProductId(int id);
+    Integer findSoldByProductId(int id);
     List<ImageFileVO> findImageByProductId(int id);
     ProductVO findOneProductByProductId(int id);
 

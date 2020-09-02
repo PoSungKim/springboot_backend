@@ -7,14 +7,14 @@
         ORDER BY id;
     </select>
 
-    <select id="findCartByProductId" resultType="int" parameterType="int">
+    <select id="findCartByProductId" resultType="Integer" parameterType="int">
         select count(*) as cart_cnt
             from user_cart
             where product_id = #{id}
             group by product_id
     </select>
 
-    <select id="findSoldByProductId" resultType="int" parameterType="int">
+    <select id="findSoldByProductId" resultType="Integer" parameterType="int">
         select count(*) as purchase_cnt
             from user_purchase
             where product_id = #{id}

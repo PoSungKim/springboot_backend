@@ -38,17 +38,10 @@ public class ProductController {
     public ProductCartSoldVO ProductCartSoldVO(@PathVariable(value="productId") int id) {
         System.out.println(localDateTime.now() + " ProductCartSoldVO() 함수 호출" + " "+  id);
         ProductCartSoldVO ret = new ProductCartSoldVO();
-        try {
-            ret.setCart_cnt(productDao.findCartByProductId(id));
-        } catch (Exception error) {
-            ret.setCart_cnt(0);
-        }
 
-        try {
-            ret.setPurchase_cnt(productDao.findSoldByProductId(id));
-        } catch (Exception error) {
-            ret.setCart_cnt(0);
-        }
+        // Primitive Type인 int형에는 NULL이 올 수 없기 때문에, Controller, Dao, Mapper 등에서 Integer 타입으로 변환함
+        ret.setCart_cnt(productDao.findCartByProductId(id));
+        ret.setPurchase_cnt(productDao.findSoldByProductId(id));
 
         System.out.println(ret);
         return ret;
