@@ -7,6 +7,18 @@
         ORDER BY id;
     </select>
 
+    <select id="findCartSoldByProductId" resultType="com.portfolio.springboot_backend.model.product.ProductCartSoldVO" parameterType="int">
+        SELECT * FROM
+        (select count(*) as cart_cnt
+            from user_cart
+            where product_id = #{id}
+            group by product_id) AS A,
+        (select count(*) as purchase_cnt
+            from user_purchase
+            where product_id = #{id}
+            group by product_id) AS B;
+    </select>
+
     <select id="findOneProductByProductId" resultType="com.portfolio.springboot_backend.model.product.ProductVO" parameterType="int">
         SELECT * FROM products
         WHERE id = #{id}

@@ -1,12 +1,10 @@
 package com.portfolio.springboot_backend.controller;
 
 import com.portfolio.springboot_backend.dao.ProductDao;
-import com.portfolio.springboot_backend.model.product.ProductImagesVO;
-import com.portfolio.springboot_backend.model.product.ProductVO;
-import com.portfolio.springboot_backend.model.product.ImageFileVO;
-import com.portfolio.springboot_backend.model.product.UserProductVO;
+import com.portfolio.springboot_backend.model.product.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +32,13 @@ public class ProductController {
             productList.get(i).setImages(imageList);
         }
         return productList;
+    }
+
+    @GetMapping("/check/{productId}")
+    public ProductCartSoldVO ProductCartSoldVO(@PathVariable(value="productId") int id) {
+        System.out.println(localDateTime.now() + " ProductCartSoldVO() 함수 호출" + " "+  id);
+        System.out.println(productDao.findCartSoldByProductId(id));
+        return productDao.findCartSoldByProductId(id);
     }
 
     @GetMapping("/{productId}")

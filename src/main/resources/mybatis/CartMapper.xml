@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.portfolio.springboot_backend.dao.CartDao">
+
+    <insert id="saveUserPurchase" parameterType="com.portfolio.springboot_backend.model.cart.AddInfoCartVO" >
+        INSERT INTO user_purchase(user_id, product_id)
+        VALUES (#{user_id}, #{product_id})
+    </insert>
+
+    <insert id="saveUserCart" parameterType="com.portfolio.springboot_backend.model.cart.AddInfoCartVO" >
+        INSERT INTO user_cart(user_id, product_id)
+        VALUES (#{user_id}, #{product_id})
+    </insert>
+
+    <select id = "findAllPurchaseByUserId" resultType="com.portfolio.springboot_backend.model.cart.CartVO" parameterType="int">
+        SELECT * FROM
+            (SELECT count(*) as count, user_id, product_id
+             FROM user_purchase WHERE user_id = 7 GROUP BY (product_id))
+                AS cnt_user_product, products
+                WHERE cnt_user_product.product_id = products.id;
+    </select>
+
     <select id ="findAllCartByUserId" resultType="com.portfolio.springboot_backend.model.cart.CartVO" parameterType="int">
         SELECT * FROM
             (SELECT count(*) as count, user_id, product_id
@@ -9,16 +28,16 @@
                 WHERE cnt_user_cart.product_id = products.id;
     </select>
 
-    <select id="saveUserCart" parameterType="com.portfolio.springboot_backend.model.cart.AddInfoCartVO" >
-        INSERT INTO user_cart(user_id, product_id)
-        VALUES (#{user_id}, #{product_id})
-    </select>
-
     <delete id ="deleteUserCart" parameterType="com.portfolio.springboot_backend.model.cart.AddInfoCartVO">
         DELETE FROM user_cart
         WHERE user_id = #{user_id} AND product_id = #{product_id}
         ORDER BY cart_id ASC
         LIMIT 1;
+    </delete>
+
+    <delete id ="deleteAllUserCart" parameterType="int">
+        DELETE FROM user_cart
+        WHERE user_id = #{user_id}
     </delete>
 
 </mapper>
